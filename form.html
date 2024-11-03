@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Web App Example</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+
+    <h1>Send Telegram User ID to Server</h1>
+
+    <button id="sendDataButton">Send User ID</button>
+
+    <script>
+
+        // Инициализация Telegram Web App
+        window.onload = function() {
+alert('1');
+    // Получаем информацию о пользователе
+              //  const userId = Telegram.WebApp.initDataUnsafe.user.id;
+
+                // Отправляем данные на сервер
+                const data = {
+                    userId: 123
+                };
+alert('2');
+            window.Telegram.WebApp.sendData(JSON.stringify(1)); // Инициализируем Telegram Web App после загрузки страницы
+			alert('3');
+            // Обработчик клика на кнопку
+            document.getElementById("sendDataButton").addEventListener("click", function() {
+            
+                fetch('http://localhost:5000/api/telegram/send-data', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Response from server:", data);
+                    alert("Data sent successfully!");
+                })
+                .catch(error => {
+                    console.error("Error sending data:", error);
+                });
+            });
+        };
+    </script>
+
+</body>
+</html>
